@@ -2,41 +2,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:body>
-	<h1>Novo Autor</h1>
-	<h:form>
+<ui:composition template="_template.xhtml">
+	<!-- Formulário de cadastro de autores -->
+	<ui:define name="titulo">Cadastro Autor</ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<fieldset>
+				<legend>Dados do Autor</legend>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Nome:" for="nome" />
+					<h:inputText id="nome" value="#{autorBean.autor.nome}"
+						required="true" requiredMessage="*Campo obrigatório"
+						validatorMessage="Nome deve conter entre 3 e 20 caracteres">
+						<f:validateLength maximum="20" minimum="3" />
+					</h:inputText>
+					<h:commandButton value="Gravar" action="#{autorBean.gravar}" >
+						<f:ajax execute="@form" render=":tabelaAutores"/>
+					</h:commandButton>
+					<h:message for="nome" />
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+		
+		<!-- Tabela de exibição dos autores -->
 		<fieldset>
-			<legend>Dados do Autor</legend>
-			<h:panelGrid columns="3">
-				<h:outputLabel value="Nome:" for="nome" />
-				<h:inputText id="nome" value="#{autorBean.autor.nome}"
-					required="true" requiredMessage="*Campo obrigatório"
-					validatorMessage="Nome deve conter entre 3 e 20 caracteres">
-					<f:validateLength maximum="20" minimum="3" />
-				</h:inputText>
-				<h:commandButton value="Gravar" action="#{autorBean.gravar}" >
-					<f:ajax execute="@form" render=":tabelaAutores"/>
-				</h:commandButton>
-				<h:message for="nome" />
-			</h:panelGrid>
+			<legend>Autores cadastrados</legend>
+			<h:dataTable id="tabelaAutores" value="#{livroBean.autores}" var="autor">
+				<h:column>
+					<f:facet name="header">ID autor</f:facet>
+					<h:outputText value="#{autor.id}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nome autor</f:facet>
+					<h:outputText value="#{autor.nome}"/>
+				</h:column>
+			</h:dataTable>
 		</fieldset>
-	</h:form>
-	
-	<fieldset>
-		<legend>Autores cadastrados</legend>
-		<h:dataTable id="tabelaAutores" value="#{livroBean.autores}" var="autor">
-			<h:column>
-				<f:facet name="header">ID autor</f:facet>
-				<h:outputText value="#{autor.id}"/>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Nome autor</f:facet>
-				<h:outputText value="#{autor.nome}"/>
-			</h:column>
-		</h:dataTable>
-	</fieldset>
-</h:body>
+	</ui:define>
+</ui:composition>
 
 </html>
