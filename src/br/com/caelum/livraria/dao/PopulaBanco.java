@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.modelo.Usuario;
 
 public class PopulaBanco {
 
@@ -38,7 +39,7 @@ public class PopulaBanco {
 		em.persist(memorias);
 		em.persist(quincas);
 
-		Livro alquemista = geraLivro("978-8-57-542758-3", "O Alquimista",
+		Livro alquimista = geraLivro("978-8-57-542758-3", "O Alquimista",
 				"01/01/1988", 19.90, coelho);
 		Livro brida = geraLivro("978-8-50-567258-7", "Brida", "01/01/1990",
 				12.90, coelho);
@@ -47,7 +48,7 @@ public class PopulaBanco {
 		Livro maao = geraLivro("978-8-51-892238-9", "O Diario de um Mago",
 				"01/01/1987", 9.90, coelho);
 
-		em.persist(alquemista);
+		em.persist(alquimista);
 		em.persist(brida);
 		em.persist(valkirias);
 		em.persist(maao);
@@ -59,10 +60,21 @@ public class PopulaBanco {
 
 		em.persist(capitaes);
 		em.persist(flor);
+		
+		Usuario usuario = geraUsuario("Usuario Teste", "teste@teste.com", "123456");
+		em.persist(usuario);
 
-		em.getTransaction().commit();
+		em.getTransaction().commit();	
 		em.close();
 
+	}
+
+	private static Usuario geraUsuario(String nome, String email, String senha) {
+		Usuario user = new Usuario();
+		user.setNome(nome);
+		user.setEmail(email);
+		user.setSenha(senha);
+		return user;
 	}
 
 	private static Autor geraAutor(String nome) {

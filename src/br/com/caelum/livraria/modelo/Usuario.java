@@ -1,5 +1,6 @@
 package br.com.caelum.livraria.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,16 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="autor")
-public class Autor {
+@Table(name="usuario")
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
+	@Column
 	private String nome;
 	
+	@Column
 	private String email;	
+	
+	@Column
+	private String senha;
 	
 
 	public String getEmail() {
@@ -41,6 +47,14 @@ public class Autor {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}	
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
@@ -59,7 +73,7 @@ public class Autor {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Autor other = (Autor) obj;
+		Usuario other = (Usuario) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
