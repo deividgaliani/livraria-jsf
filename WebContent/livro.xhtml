@@ -78,7 +78,7 @@
 						<h:outputText value="#{autor.nome}"></h:outputText>
 					</h:column>
 					<h:column>
-						<h:commandButton value="Remover autor" action="#{livroBean.removerAutorDoLivro(autor)}"/>
+						<h:commandButton value="Remover autor" action="#{livroBean.removerAutorDoLivro(autor)}" immediate="true"/>
 					</h:column>
 				</h:dataTable>
 				<h:commandLink value="Cadastrar novo autor" action="autor?faces-redirect=true" immediate="true"/>

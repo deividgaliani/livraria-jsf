@@ -7,15 +7,21 @@ import br.com.caelum.livraria.modelo.Usuario;
 
 public class UsuarioDAO {
 	
-	public boolean existeUsuario(Usuario usuario) {
+	public Usuario buscarUsuario(Usuario usuario) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		TypedQuery<Usuario> query = em.createQuery(
-				"select u from Usuario u "
-				+ " where u.email = :uEmail and u.senha = :uSenha ", Usuario.class);
-		query.setParameter("uEmail", usuario.getEmail());
-		query.setParameter("uSenha", usuario.getSenha());
-		Usuario result = query.getSingleResult();
-		em.close();		
-		return result != null;
+				" from Usuario usuario "
+				+ " where usuario.email = :email and usuario.senha = :senha ", Usuario.class);
+		query.setParameter("email", usuario.getEmail())
+			.setParameter("senha", usuario.getSenha());
+		try {
+			Usuario result = query.getSingleResult();
+			return result;
+		}catch (Exception e) {
+			//doNothing
+		}finally {
+			em.close();
+		}
+		return null;
 	}
 }
