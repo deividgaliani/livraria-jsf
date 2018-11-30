@@ -29,7 +29,6 @@ public class LoginBean {
 			currentInstance.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
 		}else {
-			currentInstance.getExternalContext().getFlash().setKeepMessages(true);
 			currentInstance.addMessage(null, new FacesMessage("Usuário ou senha inválido"));
 		}
 		return null;
