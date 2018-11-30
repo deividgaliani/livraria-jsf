@@ -11,10 +11,7 @@
 	<ui:define name="titulo">Área de acesso</ui:define>
 	<ui:define name="conteudo">
 		<h:form>
-			<h:commandLink value="Voltar para página de livros" action="livro?faces-redirect=true" immediate="true" />
-		</h:form>
-		<h:form>
-			<h:messages/>
+			<h:messages globalOnly="true"/>
 			<fieldset>
 				<legend>Login</legend>
 				<h:panelGrid columns="3">

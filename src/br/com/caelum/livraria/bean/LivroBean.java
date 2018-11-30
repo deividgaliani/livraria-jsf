@@ -58,7 +58,7 @@ public class LivroBean {
 	public void gravar() {
 		System.out.println("Gravando livro " + this.livro.getTitulo());
 		if (livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
 		if(this.livro.getId() == null) {

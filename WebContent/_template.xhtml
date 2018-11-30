@@ -7,6 +7,18 @@
 	
 	<h:head/>
 	<h:body>
+		<div id="toolbar">
+			<h:form id="formLink"> 
+				<h:commandLink value="Cadastro livros" action="livro?faces-redirect=true" immediate="true" rendered="#{usuarioLogado != null}"/>
+				<div/>
+				<h:commandLink value="Cadastro autores" action="autor?faces-redirect=true" immediate="true" rendered="#{usuarioLogado != null}"/>	
+				<div/>			
+				<h:commandLink value="Login" action="login?faces-redirect=true" immediate="true" rendered="#{usuarioLogado == null}"/>
+				<div/>
+				<h:commandLink value="Logout" action="#{loginBean.deslogar}" immediate="true" rendered="#{usuarioLogado != null}"/>
+			</h:form>
+		</div>
+	
 		<div id="cabecalho">
 			<h:graphicImage library="img" name="jsf-logo.png"/>
 			<h1><ui:insert name="titulo"></ui:insert></h1>
