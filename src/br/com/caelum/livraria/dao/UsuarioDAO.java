@@ -18,10 +18,9 @@ public class UsuarioDAO {
 			Usuario result = query.getSingleResult();
 			return result;
 		}catch (Exception e) {
-			//doNothing
+			return null;
 		}finally {
 			em.close();
 		}
-		return null;
 	}
 }
