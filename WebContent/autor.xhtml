@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="_template.xhtml">
@@ -15,60 +16,55 @@
 	<!-- Formulário de cadastro de autores -->
 	<ui:define name="titulo">Cadastro Autor</ui:define>
 	<ui:define name="conteudo">
-		<h:form>
+		<h:form id="formCadastroAutor">
 			<h:messages globalOnly="true"/>
-			<fieldset>
-				<legend>Dados do Autor</legend>
+			<p:fieldset legend="Dados do Autor">
 				<h:panelGrid columns="3">
-					<h:outputLabel value="Nome:" for="nome" />
-					<h:inputText id="nome" value="#{autorBean.autor.nome}"
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{autorBean.autor.nome}"
 						required="true" requiredMessage="Campo nome obrigatório"
 						validatorMessage="Nome deve conter entre 3 e 20 caracteres">
 						<f:validateLength maximum="20" minimum="3" />
 						<f:ajax execute="nome" render="msgNome" event="blur"/>
-					</h:inputText>
-					<h:message for="nome" id="msgNome"/>
+					</p:inputText>
+					<p:message for="nome" id="msgNome"/>
 					
-					<h:outputLabel value="Email:" for="email" />
-					<h:inputText id="email" value="#{autorBean.autor.email}">
-						<f:passThroughAttribute name="type" value="email" />
-					</h:inputText>
-					<h:message for="email" id="msgEmail"/>
+					<p:outputLabel value="Email:" for="email" />
+					<p:inputText id="email" value="#{autorBean.autor.email}" validatorMessage="Email inválido" />
+					<p:message for="email" id="msgEmail"/>
 					
-					<h:commandButton value="Gravar" action="#{autorBean.gravar}" >
-						<f:ajax execute="@form" render="@form :formTabelaAutores:tabelaAutores"/>
-					</h:commandButton>						
+					<p:commandButton value="Gravar" action="#{autorBean.gravar}" process="@form" update="@form :formTabelaAutores:tabelaAutores"/>
 					
 				</h:panelGrid>
-			</fieldset>
+			</p:fieldset>
 		</h:form>
 		<!-- Tabela de exibição dos autores -->
-		<fieldset>
-			<legend>Autores cadastrados</legend>
+		<p:fieldset legend="Autores cadastrados">
 			<h:form id="formTabelaAutores">
-				<h:messages/>
-				<h:dataTable id="tabelaAutores" value="#{livroBean.autores}" var="autor">
-					<h:column>
-						<f:facet name="header">ID autor</f:facet>
+				<p:messages/>
+				<p:dataTable id="tabelaAutores" value="#{livroBean.autores}" var="autor">
+					<p:column headerText="ID autor">
 						<h:outputText value="#{autor.id}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">Nome autor</f:facet>
+					</p:column>
+					<p:column headerText="Nome autor">
 						<h:outputText value="#{autor.nome}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">Email</f:facet>
+					</p:column>
+					<p:column headerText="Email">
 						<h:outputText value="#{autor.email}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">Ações</f:facet>
-						<h:commandButton value="Alterar" action="#{autorBean.alterar(autor)}"/>
-						<h:commandButton value="Excluir" action="#{autorBean.remover(autor)}"/>
-					</h:column>	
-					<f:passThroughAttribute name="border" value="1" />		
-				</h:dataTable>
+					</p:column>
+					<p:column headerText="Ações">
+						<p:commandButton 
+							icon="ui-icon-pencil" 
+							action="#{autorBean.alterar(autor)}" 
+							update=":formCadastroAutor"/>
+						<p:commandButton 
+							icon="ui-icon-trash" 
+							action="#{autorBean.remover(autor)}" 
+							update="@form"/>
+					</p:column>	
+				</p:dataTable>
 			</h:form>
-		</fieldset>
+		</p:fieldset>
 	</ui:define>
 </ui:composition>
 

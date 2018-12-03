@@ -16,7 +16,14 @@
 			<p:fieldset legend="login">
 				<h:panelGrid columns="3">
 					<p:outputLabel value="Identificação" for="identificacao" />
-					<p:inputText id="identificacao" value="#{loginBean.usuario.email}" required="true" requiredMessage="Campo obrigatório"/>
+					<p:inputText 
+						id="identificacao" 
+						value="#{loginBean.usuario.email}" 
+						required="true" 
+						requiredMessage="Campo obrigatório" 
+						validatorMessage="Email inválido">
+						<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+					</p:inputText>
 					<p:message for="identificacao"/>
 					
 					<p:outputLabel value="Senha" for="senha" />
