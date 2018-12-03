@@ -61,7 +61,7 @@ public class PopulaBanco {
 		em.persist(capitaes);
 		em.persist(flor);
 		
-		Usuario usuario = geraUsuario("Usuario Teste", "teste@teste.com", "123456");
+		Usuario usuario = geraUsuario("Deivid", "teste@teste.com", "123456");
 		em.persist(usuario);
 
 		em.getTransaction().commit();	
