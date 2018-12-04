@@ -19,7 +19,7 @@
 		<h:form id="formCadastro">
 			<p:messages id="messages" globalOnly="true"/>
 			<p:fieldset legend="Dados do Livro">
-				<h:panelGrid columns="3">
+				<p:panelGrid columns="3" layout="grid">
 					
 					<p:outputLabel value="Titulo:" for="titulo" />
 					<p:inputText id="titulo" value="#{livroBean.livro.titulo}"
@@ -49,7 +49,7 @@
 	                    thousandSeparator="."
 	                    required="true"
 						requiredMessage="Campo preço é obrigatório">  
-	                    <p:ajax update="msgPreco" />  
+	                    <f:ajax execute="preco" update="msgPreco" />  
 	                </p:inputNumber> 				
 					<p:message for="preco" id="msgPreco"/>
 					
@@ -65,39 +65,59 @@
 						<p:ajax event="dateSelect" update="msgLancamento" />
 					</p:calendar>
 					<p:message for="dataLancamento" id="msgLancamento"/>
-				</h:panelGrid>
+				</p:panelGrid>
 			</p:fieldset>
 			
 			<!-- Combo de seleção de autores do livro -->
 			<p:fieldset legend="Dados do Autor">
 				<p:outputLabel value="Selecione autor: " for="autor" />
-				<h:selectOneMenu id="autor" value="#{livroBean.autorId}">
-					<f:selectItems value="#{livroBean.autores}" var="autor"
-						itemLabel="#{autor.nome}" itemValue="#{autor.id}"/>
-				</h:selectOneMenu>
-				<h:commandButton value="Gravar Autor"
-					action="#{livroBean.gravarAutor}" > 
-					<f:ajax execute="autor" render="tabelaAutores"/>
-				</h:commandButton>
+				<p:selectOneMenu 
+					id="autor" 
+					value="#{livroBean.autorId}" 
+					style="width:125px">
+					<f:selectItems 
+						value="#{livroBean.autores}"
+						var="autor"
+						itemLabel="#{autor.nome}"
+						itemValue="#{autor.id}"/>
+		        </p:selectOneMenu>
+				<p:commandButton 
+					value="Gravar Autor"
+					action="#{livroBean.gravarAutor}"
+					process="@this autor"
+					update="tabelaAutores"/> 
 	
 				<p:dataTable 
 					value="#{livroBean.autoresDoLivro}" 
 					var="autor" 
 					id="tabelaAutores"
-					emptyMessage="Sem dados para exibir">
+					emptyMessage="Nenhum autor">
 					<p:column headerText="Nome">
 						<h:outputText value="#{autor.nome}"></h:outputText>
 					</p:column>
 					<p:column headerText="Ações">
-						<h:commandButton value="Remover autor" action="#{livroBean.removerAutorDoLivro(autor)}" immediate="true"/>
+						<p:commandButton 
+							value="Remover autor" 
+							action="#{livroBean.removerAutorDoLivro(autor)}" 
+							immediate="true" 
+							process="@this"
+							update="tabelaAutores"/>
 					</p:column>
 				</p:dataTable>
-				<h:commandLink value="Cadastrar novo autor" action="autor?faces-redirect=true" immediate="true"/>
+				<p:commandLink 
+					value="Cadastrar novo autor" 
+					action="autor?faces-redirect=true" 
+					immediate="true"
+					update="@all"/>
 			</p:fieldset>
 	
-			<h:commandButton value="Gravar" action="#{livroBean.gravar}" > 
-				<f:ajax execute="@form" render="@form :formTabelaLivros:tabelaLivros"/>
-			</h:commandButton>
+			<p:commandButton 
+				value="Gravar" 
+				action="#{livroBean.gravar}" 
+				process="@form"
+				update="@form :formTabelaLivros:tabelaLivros"
+				styleClass="ui-priority-primary"/> 
+				
 		</h:form>
 		
 		
@@ -122,8 +142,15 @@
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Ações">
-					<p:commandButton value="Editar" action="#{livroBean.editar(livro)}" update=":formCadastro"/>
-					<p:commandButton value="Excluir" action="#{livroBean.remover(livro)}"/>
+					<p:commandButton 
+						value="Editar" 
+						action="#{livroBean.editar(livro)}" 
+						update=":formCadastro"/>
+					<p:commandButton 
+						value="Excluir" 
+						action="#{livroBean.remover(livro)}"
+						process="@this"
+						update="@form"/>
 				</p:column>
 				<f:passThroughAttribute name="border" value="1" />		
 			</p:dataTable>
