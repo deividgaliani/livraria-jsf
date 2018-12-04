@@ -12,7 +12,11 @@ import br.com.caelum.livraria.modelo.Usuario;
 @ViewScoped
 public class LoginBean {
 	
-	private Usuario usuario = new Usuario();
+	private Usuario usuario;
+	
+	public LoginBean() {
+		this.usuario =  new Usuario();
+	}
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -24,12 +28,13 @@ public class LoginBean {
 	
 	public String logar() {
 		FacesContext currentInstance = FacesContext.getCurrentInstance();
-		this.usuario = new UsuarioDAO().buscarUsuario(this.usuario);
+		Usuario usuario = new UsuarioDAO().buscarUsuario(this.usuario);
 		if(usuario != null) {
+			this.usuario = usuario;
 			currentInstance.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
 		}else {
-			currentInstance.addMessage(null, new FacesMessage("Usu√°rio ou senha inv√°lido"));
+			currentInstance.addMessage(null, new FacesMessage("Usu·rio ou senha inv·lido"));
 		}
 		return null;
 	}
@@ -37,7 +42,14 @@ public class LoginBean {
 	public String deslogar() {
 		FacesContext currentInstance = FacesContext.getCurrentInstance();
 		currentInstance.getExternalContext().getSessionMap().remove("usuarioLogado");
+		this.usuario = new Usuario();
 		return "login?faces-redirect=true";
+	}
+	
+	public Usuario getUsuarioLogado() {
+		FacesContext currentInstance = FacesContext.getCurrentInstance();
+		Usuario logado = (Usuario) currentInstance.getExternalContext().getSessionMap().get("usuarioLogado");
+		return logado;
 	}
 	
 }

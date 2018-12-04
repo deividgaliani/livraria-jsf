@@ -79,7 +79,7 @@ public class LivroBean {
 	public void validaISBN(FacesContext fc, UIComponent component, Object value) {
 		String valor = value.toString();
 		if(!valor.startsWith("1")) {
-			throw new ValidatorException(new FacesMessage("ISBN deve comeÃ§ar com dÃ­gito 1"));
+			throw new ValidatorException(new FacesMessage("ISBN deve começar com dígito 1"));
 		}
 	}
 	
