@@ -29,6 +29,16 @@
 						<f:ajax execute="titulo" event="blur"  render="msgTitulo"/>
 					</p:inputText>
 					<p:message for="titulo" id="msgTitulo"/>
+					
+					<p:outputLabel value="Gênero:" for="genero" />                            
+					<p:selectOneMenu value="#{livroBean.livro.genero}" 
+									 id="genero" 
+									 required="true" 
+									 requiredMessage="Selecione um gênero">
+					    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+					    <f:selectItems value="#{livroBean.generos}" /> 
+					</p:selectOneMenu>
+					<p:message for="genero" id="msgGenero"/>
 	
 					<p:outputLabel value="ISBN:" for="isbn" />
 					<p:inputMask id="isbn" 
@@ -74,18 +84,24 @@
 				<p:selectOneMenu 
 					id="autor" 
 					value="#{livroBean.autorId}" 
-					style="width:125px">
+					style="width:150px">
 					<f:selectItems 
 						value="#{livroBean.autores}"
 						var="autor"
 						itemLabel="#{autor.nome}"
 						itemValue="#{autor.id}"/>
 		        </p:selectOneMenu>
+		        <span/>
 				<p:commandButton 
 					value="Gravar Autor"
 					action="#{livroBean.gravarAutor}"
 					process="@this autor"
 					update="tabelaAutores"/> 
+				<span/>
+				<p:commandLink 
+					value="ou cadastrar novo autor" 
+					action="autor?faces-redirect=true" 
+					immediate="true" />
 	
 				<p:dataTable 
 					value="#{livroBean.autoresDoLivro}" 
@@ -104,39 +120,69 @@
 							update="tabelaAutores"/>
 					</p:column>
 				</p:dataTable>
-				<p:commandLink 
-					value="Cadastrar novo autor" 
-					action="autor?faces-redirect=true" 
-					immediate="true"
-					update="@all"/>
+				
 			</p:fieldset>
 	
 			<p:commandButton 
-				value="Gravar" 
+				value="Gravar Livro" 
 				action="#{livroBean.gravar}" 
-				process="@form"
+				process="@this @form"
 				update="@form :formTabelaLivros:tabelaLivros"
 				styleClass="ui-priority-primary"/> 
 				
 		</h:form>
-		
+		<br/><br/><br/><br/><br/>
 		
 		<!-- Tabela de exibição dos livros cadastrados -->
 		<h:form id="formTabelaLivros">
-			<p:dataTable id="tabelaLivros" value="#{livroBean.livros}" var="livro">
-				<p:column headerText="ID Livro">
+			<p:dataTable id="tabelaLivros" 
+						 value="#{livroBean.livroDataModel}" 
+						 var="livro"
+						 paginator="true"
+						 rows="5"
+						 lazy="true"
+						 widgetVar="tabelaLivros">
+				<f:facet name="header">Livros</f:facet>
+				<p:column headerText="ID Livro" 
+						  sortBy="#{livro.id}"
+						  filterBy="#{livro.id}"
+						  filterMatchMode="contains">
 					<h:outputText value="#{livro.id}"></h:outputText>
 				</p:column>
-				<p:column headerText="Título">
+				<p:column headerText="Título" 
+						  sortBy="#{livro.titulo}"
+						  filterBy="#{livro.titulo}"
+						  filterMatchMode="contains">
 					<h:outputText value="#{livro.titulo}"></h:outputText>
 				</p:column>
-				<p:column headerText="ISBN">
+				<p:column headerText="Gênero" 
+						  sortBy="#{livro.genero}"  
+						  filterBy="#{livro.genero}" 
+						  filterMatchMode="contains">
+					 <f:facet name="filter">
+						 <p:selectOneMenu onchange="PF('tabelaLivros').filter()">
+				            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" noSelectionOption="true" />
+				            <f:selectItems value="#{livroBean.generos}" />
+				        </p:selectOneMenu>
+			        </f:facet>
+    				<h:outputText value="#{livro.genero}" />
+				</p:column>
+				<p:column headerText="ISBN"
+						  sortBy="#{livro.isbn}"
+						  filterBy="#{livro.isbn}"
+						  filterMatchMode="contains">
 					<h:outputText value="#{livro.isbn}"></h:outputText>
 				</p:column>
-				<p:column headerText="Preço">
+				<p:column headerText="Preço"
+						  sortBy="#{livro.preco}"
+						  filterBy="#{livro.preco}"
+						  filterMatchMode="contains">
 					<h:outputText value="#{livro.preco}"></h:outputText>
 				</p:column>
-				<p:column headerText="Data">
+				<p:column headerText="Data"
+						  sortBy="#{livro.dataLancamento.time}"
+						  filterBy="#{livro.dataLancamento.time}"
+						  filterMatchMode="contains">
 					<h:outputText value="#{livro.dataLancamento.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
 					</h:outputText>

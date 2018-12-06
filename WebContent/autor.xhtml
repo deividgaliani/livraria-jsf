@@ -7,64 +7,59 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="_template.xhtml">
-	
+
 	<f:metadata>
-		<f:viewParam name="autorId" value="#{autorBean.autorId}"/>
-		<f:viewAction action="#{autorBean.carregarAutorPorId}" if="#{param.autorId != null}"/>
+		<f:viewParam name="autorId" value="#{autorBean.autorId}" />
+		<f:viewAction action="#{autorBean.carregarAutorPorId}"
+			if="#{param.autorId != null}" />
 	</f:metadata>
-	
+
 	<!-- Formulário de cadastro de autores -->
 	<ui:define name="titulo">Cadastro Autor</ui:define>
 	<ui:define name="conteudo">
 		<h:form id="formCadastroAutor">
-			<h:messages globalOnly="true"/>
+			<h:messages globalOnly="true" />
 			<p:fieldset legend="Dados do Autor">
 				<h:panelGrid columns="3">
+				
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{autorBean.autor.nome}"
 						required="true" requiredMessage="Campo nome obrigatório"
 						validatorMessage="Nome deve conter entre 3 e 20 caracteres">
 						<f:validateLength maximum="20" minimum="3" />
-						<f:ajax execute="nome" render="msgNome" event="blur"/>
+						<f:ajax execute="nome" render="msgNome" event="blur" />
 					</p:inputText>
-					<p:message for="nome" id="msgNome"/>
-					
+					<p:message for="nome" id="msgNome" />
+
 					<p:outputLabel value="Email:" for="email" />
-					<p:inputText id="email" value="#{autorBean.autor.email}" validatorMessage="Email inválido" />
-					<p:message for="email" id="msgEmail"/>
-					
-					<p:commandButton value="Gravar" action="#{autorBean.gravar}" process="@form" update="@form :formTabelaAutores:tabelaAutores"/>
-					
+					<p:inputText id="email" value="#{autorBean.autor.email}"
+						validatorMessage="Email inválido" />
+					<p:message for="email" id="msgEmail" />
+
+					<p:commandButton value="Gravar" action="#{autorBean.gravar}"
+						process="@form" update="@form :formTabelaAutores:tabelaAutores" />
+
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
-		<!-- Tabela de exibição dos autores -->
-		<p:fieldset legend="Autores cadastrados">
-			<h:form id="formTabelaAutores">
-				<p:messages/>
-				<p:dataTable id="tabelaAutores" value="#{livroBean.autores}" var="autor">
-					<p:column headerText="ID autor">
-						<h:outputText value="#{autor.id}"/>
-					</p:column>
-					<p:column headerText="Nome autor">
-						<h:outputText value="#{autor.nome}"/>
-					</p:column>
-					<p:column headerText="Email">
-						<h:outputText value="#{autor.email}"/>
-					</p:column>
-					<p:column headerText="Ações">
-						<p:commandButton 
-							icon="ui-icon-pencil" 
-							action="#{autorBean.alterar(autor)}" 
-							update=":formCadastroAutor"/>
-						<p:commandButton 
-							icon="ui-icon-trash" 
-							action="#{autorBean.remover(autor)}" 
-							update="@form"/>
-					</p:column>	
-				</p:dataTable>
-			</h:form>
-		</p:fieldset>
+		<!-- DataList de exibição dos autores -->
+		<h:form id="formTabelaAutores">
+			<p:messages />
+			
+			<p:dataList id="tabelaAutores" value="#{livroBean.autores}" var="autor" type="unordered"
+				itemType="none" paginator="false">
+				<f:facet name="header"> Autores cadastrados</f:facet>
+				<p:commandButton 
+					icon="ui-icon-pencil" 
+					action="#{autorBean.alterar(autor)}" 
+					update=":formCadastroAutor"/>
+				<p:commandButton 
+					icon="ui-icon-trash" 
+					action="#{autorBean.remover(autor)}" 
+					update="@form"/>
+				<h:outputText value="#{autor.nome}, #{autor.email}" style="display:inline-block" />
+			</p:dataList>
+		</h:form>
 	</ui:define>
 </ui:composition>
 

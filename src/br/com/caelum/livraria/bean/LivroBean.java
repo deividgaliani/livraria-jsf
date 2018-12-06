@@ -1,5 +1,7 @@
 package br.com.caelum.livraria.bean;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -11,7 +13,9 @@ import javax.faces.validator.ValidatorException;
 
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
+import br.com.caelum.livraria.modelo.Genero;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.modelo.LivroDataModel;
 
 @ManagedBean
 @ViewScoped
@@ -23,12 +27,32 @@ public class LivroBean {
 	
 	private Integer livroId;
 
+	private List<Livro> livros;
+	
+	private LivroDataModel livroDataModel = new LivroDataModel();
+	
+	private List<String> generos;
+
 	public Livro getLivro() {
 		return livro;
 	}	
 	
+	public List<String> getGeneros() {
+		DAO<Genero> dao = new DAO<Genero>(Genero.class);
+		List<Genero> generos = dao.listaTodos();
+		this.generos = new ArrayList<>();
+		for (Genero g : generos) {
+			this.generos.add(g.getDescricao());
+		}
+		return this.generos;
+	}
+
 	public List<Livro> getLivros(){
-		return new DAO<Livro>(Livro.class).listaTodos();
+		DAO<Livro> dao = new DAO<Livro>(Livro.class);
+		if(this.livros == null) {
+			this.livros = dao.listaTodos();
+		}
+		return livros;
 	}
 	
 	public Integer getAutorId() {
@@ -53,19 +77,29 @@ public class LivroBean {
 
 	public void setLivroId(Integer livroId) {
 		this.livroId = livroId;
+	}	
+
+	public LivroDataModel getLivroDataModel() {
+		return livroDataModel;
+	}
+
+	public void setLivroDataModel(LivroDataModel livroDataModel) {
+		this.livroDataModel = livroDataModel;
 	}
 
 	public void gravar() {
-		System.out.println("Gravando livro " + this.livro.getTitulo());
 		if (livro.getAutores().isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
+		System.out.println("Gravando livro " + this.livro.getTitulo());
+		DAO<Livro> dao = new DAO<Livro>(Livro.class);
 		if(this.livro.getId() == null) {
-			new DAO<Livro>(Livro.class).adiciona(this.livro);
+			dao.adiciona(this.livro);
 		}else {
-			new DAO<Livro>(Livro.class).atualiza(this.livro);
+			dao.atualiza(this.livro);
 		}
+		this.livros = dao.listaTodos();
 		this.livro = new Livro();
 	}
 	
@@ -79,7 +113,7 @@ public class LivroBean {
 	public void validaISBN(FacesContext fc, UIComponent component, Object value) {
 		String valor = value.toString();
 		if(!valor.startsWith("1")) {
-			throw new ValidatorException(new FacesMessage("ISBN deve começar com dígito 1"));
+			throw new ValidatorException(new FacesMessage("ISBN deve comeï¿½ar com dï¿½gito 1"));
 		}
 	}
 	
