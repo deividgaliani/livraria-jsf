@@ -1,11 +1,15 @@
 package br.com.caelum.livraria.dao;
 
 import java.util.List;
+import java.util.Map;
 
-import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import br.com.caelum.livraria.dto.LivroDTO;
+import br.com.caelum.livraria.modelo.Livro;
 
 public class DAO<T> {
 
@@ -88,7 +92,6 @@ public class DAO<T> {
 		if(valor != null) {
 			query = query.where(em.getCriteriaBuilder().like(root.<String>get(coluna), "%" + valor + "%"));
 		}		
-		//query.select(query.from(classe));
 
 		List<T> lista = em.createQuery(query).setFirstResult(firstResult)
 				.setMaxResults(maxResults).getResultList();
@@ -105,5 +108,5 @@ public class DAO<T> {
         em.close();
         return (int) result;
     }
-
+	
 }

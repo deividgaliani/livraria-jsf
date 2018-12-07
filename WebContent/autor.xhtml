@@ -42,23 +42,34 @@
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
+		<br/><br/><br/>
 		<!-- DataList de exibição dos autores -->
 		<h:form id="formTabelaAutores">
 			<p:messages />
 			
-			<p:dataList id="tabelaAutores" value="#{livroBean.autores}" var="autor" type="unordered"
-				itemType="none" paginator="false">
+			<p:dataTable id="tabelaAutores" 
+						 value="#{livroBean.autores}" 
+						 var="autor">
 				<f:facet name="header"> Autores cadastrados</f:facet>
-				<p:commandButton 
-					icon="ui-icon-pencil" 
-					action="#{autorBean.alterar(autor)}" 
-					update=":formCadastroAutor"/>
-				<p:commandButton 
-					icon="ui-icon-trash" 
-					action="#{autorBean.remover(autor)}" 
-					update="@form"/>
-				<h:outputText value="#{autor.nome}, #{autor.email}" style="display:inline-block" />
-			</p:dataList>
+				<p:column headerText="Nome">
+					<h:outputText value="#{autor.nome}" />
+				</p:column>
+				<p:column headerText="E-mail">
+					<h:outputText value="#{autor.email}" />
+				</p:column>
+				<p:column headerText="Ações">
+					<p:commandButton 
+						value="Editar"
+						icon="ui-icon-pencil" 
+						action="#{autorBean.alterar(autor)}" 
+						update=":formCadastroAutor"/>
+					<p:commandButton 
+						value="Excluir"
+						icon="ui-icon-trash" 
+						action="#{autorBean.remover(autor)}" 
+						update="@form"/>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

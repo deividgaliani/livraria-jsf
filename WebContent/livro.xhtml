@@ -34,7 +34,8 @@
 					<p:selectOneMenu value="#{livroBean.livro.genero}" 
 									 id="genero" 
 									 required="true" 
-									 requiredMessage="Selecione um gênero">
+									 requiredMessage="Selecione um gênero"
+									 style="width:195px">
 					    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
 					    <f:selectItems value="#{livroBean.generos}" /> 
 					</p:selectOneMenu>
@@ -83,8 +84,7 @@
 				<p:outputLabel value="Selecione autor: " for="autor" />
 				<p:selectOneMenu 
 					id="autor" 
-					value="#{livroBean.autorId}" 
-					style="width:150px">
+					value="#{livroBean.autorId}" >
 					<f:selectItems 
 						value="#{livroBean.autores}"
 						var="autor"
@@ -96,7 +96,7 @@
 					value="Gravar Autor"
 					action="#{livroBean.gravarAutor}"
 					process="@this autor"
-					update="tabelaAutores"/> 
+					update="@form tabelaAutores"/> 
 				<span/>
 				<p:commandLink 
 					value="ou cadastrar novo autor" 
@@ -131,7 +131,7 @@
 				styleClass="ui-priority-primary"/> 
 				
 		</h:form>
-		<br/><br/><br/><br/><br/>
+		<br/><br/><br/>
 		
 		<!-- Tabela de exibição dos livros cadastrados -->
 		<h:form id="formTabelaLivros">
@@ -141,7 +141,8 @@
 						 paginator="true"
 						 rows="5"
 						 lazy="true"
-						 widgetVar="tabelaLivros">
+						 widgetVar="tabelaLivros"
+						 emptyMessage="Nenhum registro encontrado">
 				<f:facet name="header">Livros</f:facet>
 				<p:column headerText="ID Livro" 
 						  sortBy="#{livro.id}"
@@ -191,14 +192,14 @@
 					<p:commandButton 
 						value="Editar" 
 						action="#{livroBean.editar(livro)}" 
+						process="@this"
 						update=":formCadastro"/>
 					<p:commandButton 
 						value="Excluir" 
 						action="#{livroBean.remover(livro)}"
 						process="@this"
-						update="@form"/>
+						update=":formTabelaLivros:tabelaLivros"/>
 				</p:column>
-				<f:passThroughAttribute name="border" value="1" />		
 			</p:dataTable>
 		</h:form>
 	</ui:define>

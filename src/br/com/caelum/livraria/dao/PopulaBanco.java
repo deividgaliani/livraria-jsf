@@ -40,6 +40,7 @@ public class PopulaBanco {
 		em.persist(acao);
 		em.persist(realismo);
 		em.persist(comedia);
+		em.persist(ficcao);
 
 		Livro casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro",
 				"10/01/1899", 24.90, assis, realismo.getDescricao());

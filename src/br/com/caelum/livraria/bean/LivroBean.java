@@ -1,7 +1,6 @@
 package br.com.caelum.livraria.bean;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -113,7 +112,7 @@ public class LivroBean {
 	public void validaISBN(FacesContext fc, UIComponent component, Object value) {
 		String valor = value.toString();
 		if(!valor.startsWith("1")) {
-			throw new ValidatorException(new FacesMessage("ISBN deve come�ar com d�gito 1"));
+			throw new ValidatorException(new FacesMessage("ISBN deve começar com dígito 1"));
 		}
 	}
 	

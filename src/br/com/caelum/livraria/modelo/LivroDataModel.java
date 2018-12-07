@@ -7,6 +7,8 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import br.com.caelum.livraria.dao.DAO;
+import br.com.caelum.livraria.dao.LivroDAO;
+import br.com.caelum.livraria.dto.LivroDTO;
 
 public class LivroDataModel extends LazyDataModel<Livro>{
 	private static final long serialVersionUID = 1L;
@@ -20,8 +22,10 @@ public class LivroDataModel extends LazyDataModel<Livro>{
 	@Override
 	public List<Livro> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
-		String titulo = (String) filters.get("titulo");
-		return dao.listaTodosPaginada(first, pageSize, "titulo", titulo);
+		LivroDAO dao = new LivroDAO();
+		LivroDTO dto = dao.listaTodosPaginada(first, pageSize, filters, sortField, sortOrder);
+		super.setRowCount(dto.getQuantidadeElementos());
+		return dto.getLivros();
 	}
 	
 }
