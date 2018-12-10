@@ -18,6 +18,12 @@
 		    	
 		    	<p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="ui-icon-power" rendered="#{usuarioLogado != null}"/>
 		    	<p:menuitem value="Login" url="login.xhtml" icon="ui-icon-key" rendered="#{usuarioLogado == null}"/>
+		    	<p:menuitem rendered="#{usuarioLogado != null}" style="position:absolute; right:6px">
+			        <p:themeSwitcher id="tema" style="width:165px" value="#{temaBean.tema}">
+			            <f:selectItems value="#{temaBean.temas}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme.name}"/>
+			            <f:ajax/>
+			        </p:themeSwitcher>
+		    	</p:menuitem>
     		</p:menubar>
     	</h:form>
 	</div>

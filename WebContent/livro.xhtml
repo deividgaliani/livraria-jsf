@@ -17,6 +17,7 @@
 	<ui:define name="titulo">Novo Livro</ui:define>
 	<ui:define name="conteudo">
 		<h:form id="formCadastro">
+			<p:growl id="growlMessages" showDetail="true" sticky="true" autoUpdate="true" life="1000"/>
 			<p:messages id="messages" globalOnly="true"/>
 			<p:fieldset legend="Dados do Livro">
 				<p:panelGrid columns="3" layout="grid">
@@ -147,7 +148,7 @@
 				<p:column headerText="ID Livro" 
 						  sortBy="#{livro.id}"
 						  filterBy="#{livro.id}"
-						  filterMatchMode="contains">
+						  filterMatchMode="exact">
 					<h:outputText value="#{livro.id}"></h:outputText>
 				</p:column>
 				<p:column headerText="Título" 

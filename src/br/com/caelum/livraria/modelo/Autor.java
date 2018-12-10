@@ -66,8 +66,6 @@ public class Autor {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 
 }
