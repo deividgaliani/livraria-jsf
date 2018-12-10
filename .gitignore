@@ -1,0 +1,5 @@
+*.class
+*.jar
+*.war
+
+./src/META-INF/persistence.xml
