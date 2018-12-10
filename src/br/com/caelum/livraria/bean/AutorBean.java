@@ -7,6 +7,7 @@ import javax.faces.validator.ValidatorException;
 
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
+import br.com.caelum.livraria.modelo.AutorDataModel;
 
 @ManagedBean
 @ViewScoped
@@ -14,7 +15,9 @@ public class AutorBean {
 
 	private Autor autor = new Autor();
 	
-	private Integer autorId;	
+	private Integer autorId;
+	
+	private AutorDataModel autorDataModel = new AutorDataModel();
 
 	public Integer getAutorId() {
 		return autorId;
@@ -26,6 +29,14 @@ public class AutorBean {
 
 	public Autor getAutor() {
 		return autor;
+	}	
+
+	public AutorDataModel getAutorDataModel() {
+		return autorDataModel;
+	}
+
+	public void setAutorDataModel(AutorDataModel autorDataModel) {
+		this.autorDataModel = autorDataModel;
 	}
 
 	public void gravar() {

@@ -48,15 +48,36 @@
 			<p:messages />
 			
 			<p:dataTable id="tabelaAutores" 
-						 value="#{livroBean.autores}" 
-						 var="autor">
+						 value="#{autorBean.autorDataModel}" 
+						 var="autor"
+						 emptyMessage="Nenhum registro encontrado"
+						 paginator="true"
+						 rows="3"
+						 lazy="true"
+						 widgetVar="tabelaAutores">
 				<f:facet name="header"> Autores cadastrados</f:facet>
-				<p:column headerText="Nome">
+				
+				<p:column headerText="ID"
+						  sortBy="#{autor.id}"  
+						  filterBy="#{autor.id}" 
+						  filterMatchMode="contains">
+					<h:outputText value="#{autor.id}" />
+				</p:column>
+				
+				<p:column headerText="Nome"
+						  sortBy="#{autor.nome}"  
+						  filterBy="#{autor.nome}" 
+						  filterMatchMode="contains">
 					<h:outputText value="#{autor.nome}" />
 				</p:column>
-				<p:column headerText="E-mail">
+				
+				<p:column headerText="E-mail"
+						  sortBy="#{autor.email}"  
+						  filterBy="#{autor.email}" 
+						  filterMatchMode="contains">
 					<h:outputText value="#{autor.email}" />
 				</p:column>
+				
 				<p:column headerText="Ações">
 					<p:commandButton 
 						value="Editar"
@@ -69,6 +90,7 @@
 						action="#{autorBean.remover(autor)}" 
 						update="@form"/>
 				</p:column>
+				
 			</p:dataTable>
 		</h:form>
 	</ui:define>

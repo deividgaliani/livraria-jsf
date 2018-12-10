@@ -34,7 +34,7 @@ public class LoginBean {
 			currentInstance.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
 		}else {
-			currentInstance.addMessage(null, new FacesMessage("Usu·rio ou senha inv·lido"));
+			currentInstance.addMessage(null, new FacesMessage("Usu√°rio ou senha inv√°lido"));
 		}
 		return null;
 	}
