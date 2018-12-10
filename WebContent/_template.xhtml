@@ -6,40 +6,40 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head />
-<h:body>
-	<div id="toolbar">		
-		<h:form>  
-	    	<p:growl id="messages"/>
-			<p:menubar>
-	    		<p:menuitem value="Cadastro livros" url="livro.xhtml" icon="ui-icon-bookmark" rendered="#{usuarioLogado != null}"/>
-	    		<p:menuitem value="Cadastro autores" url="autor.xhtml" icon="ui-icon-plus" rendered="#{usuarioLogado != null}"/>
-	    		<p:menuitem value="Cadastro generos" url="genero.xhtml" icon="ui-icon-plus" rendered="#{usuarioLogado != null}"/>
-		    	
-		    	<p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="ui-icon-power" rendered="#{usuarioLogado != null}"/>
-		    	<p:menuitem value="Login" url="login.xhtml" icon="ui-icon-key" rendered="#{usuarioLogado == null}"/>
-		    	<p:menuitem rendered="#{usuarioLogado != null}" style="position:absolute; right:6px">
-			        <p:themeSwitcher id="tema" style="width:165px" value="#{temaBean.tema}">
-			            <f:selectItems value="#{temaBean.temas}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme.name}"/>
-			            <f:ajax/>
-			        </p:themeSwitcher>
-		    	</p:menuitem>
-    		</p:menubar>
-    	</h:form>
-	</div>
-
-	<div id="cabecalho">
-		<h:graphicImage library="img" name="jsf-logo.png" />
-		<h1>
-			<p:outputPanel>
-				<ui:insert name="titulo"></ui:insert>
-			</p:outputPanel>
-		</h1>
-	</div>
-
-	<div id="conteudo">
-		<ui:insert name="conteudo"></ui:insert>
-	</div>
-</h:body>
+	<h:head />
+	<h:body>
+		<div id="toolbar">		
+			<h:form>  
+		    	<p:growl id="messages"/>
+				<p:menubar>
+		    		<p:menuitem value="Cadastro livros" url="livro.xhtml" icon="ui-icon-bookmark" rendered="#{usuarioLogado != null}"/>
+		    		<p:menuitem value="Cadastro autores" url="autor.xhtml" icon="ui-icon-plus" rendered="#{usuarioLogado != null}"/>
+		    		<p:menuitem value="Cadastro generos" url="genero.xhtml" icon="ui-icon-plus" rendered="#{usuarioLogado != null}"/>
+			    	
+			    	<p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="ui-icon-power" rendered="#{usuarioLogado != null}"/>
+			    	<p:menuitem value="Login" url="login.xhtml" icon="ui-icon-key" rendered="#{usuarioLogado == null}"/>
+			    	<p:menuitem rendered="#{usuarioLogado != null}" style="position:absolute; right:6px">
+				        <p:themeSwitcher id="tema" style="width:165px" value="#{temaBean.tema}">
+				            <f:selectItems value="#{temaBean.temas}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme.name}"/>
+				            <f:ajax/>
+				        </p:themeSwitcher>
+			    	</p:menuitem>
+	    		</p:menubar>
+	    	</h:form>
+		</div>
+	
+		<div id="cabecalho">
+			<h:graphicImage library="img" name="jsf-logo.png" />
+			<h1>
+				<p:outputPanel>
+					<ui:insert name="titulo"></ui:insert>
+				</p:outputPanel>
+			</h1>
+		</div>
+	
+		<div id="conteudo">
+			<ui:insert name="conteudo"></ui:insert>
+		</div>
+	</h:body>
 
 </html>

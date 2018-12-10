@@ -22,12 +22,17 @@ public class Livro {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	
 	private String titulo;
+	
 	private String isbn;
+	
 	private Double preco;
-	private String genero;
+	
 	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento = Calendar.getInstance();
+	
+	private String genero;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="rel_livro_autor")

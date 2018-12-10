@@ -17,7 +17,6 @@
 	<ui:define name="titulo">Novo Livro</ui:define>
 	<ui:define name="conteudo">
 		<h:form id="formCadastro">
-			<p:growl id="growlMessages" showDetail="true" sticky="true" autoUpdate="true" life="1000"/>
 			<p:messages id="messages" globalOnly="true"/>
 			<p:fieldset legend="Dados do Livro">
 				<p:panelGrid columns="3" layout="grid">
@@ -38,7 +37,8 @@
 									 requiredMessage="Selecione um gênero"
 									 style="width:195px">
 					    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-					    <f:selectItems value="#{livroBean.generos}" /> 
+					    <f:selectItems value="#{livroBean.generos}"/>
+					    <f:ajax execute="genero" render="msgGenero"/> 
 					</p:selectOneMenu>
 					<p:message for="genero" id="msgGenero"/>
 	
@@ -61,7 +61,7 @@
 	                    thousandSeparator="."
 	                    required="true"
 						requiredMessage="Campo preço é obrigatório">  
-	                    <f:ajax execute="preco" update="msgPreco" />  
+	                    <f:ajax execute="preco" event="blur" render="msgPreco" />  
 	                </p:inputNumber> 				
 					<p:message for="preco" id="msgPreco"/>
 					
